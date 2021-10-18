@@ -1,0 +1,156 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model HomePageModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <style>
+
+        .bigName {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .coin-logo {
+            height: 24px;
+            width: 24px;
+            border-radius: 12px;
+        }
+
+        /* Стили таблицы (IKSWEB) */
+        table .iksweb {
+            text-decoration: none;
+            border-collapse: collapse;
+            width: 100%;
+            text-align: center;
+        }
+
+            table.iksweb th {
+                font-weight: normal;
+                font-size: 14px;
+                color: #ffffff;
+                background-color: #354251;
+            }
+
+            table.iksweb td {
+                font-size: 13px;
+                color: #354251;
+            }
+
+            table.iksweb td, table.iksweb th {
+                white-space: pre-wrap;
+                padding: 10px 5px;
+                line-height: 13px;
+                vertical-align: middle;
+                border: 1px solid #354251;
+            }
+
+            table.iksweb tr:hover {
+                background-color: #f9fafb
+            }
+
+                table.iksweb tr:hover td {
+                    color: #354251;
+                    cursor: default;
+                }
+    </style>
+    <div class="form-group">
+        <script>
+            function sort(type) {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const sort = urlParams.get('sort');
+                let page = parseInt(urlParams.get('page'), 10);
+
+                let url = window.location.origin + "?sort=" + type;
+                if (!isNaN(page)) {
+                    url += "&page=" + page;
+                }
+                window.location.href = url
+            }
+        </script>
+        <p>
+            <input type="button" value="Sort by name" onclick="sort('name')" />
+        </p>
+        <p>
+            <input type="button" value="Sort by price" onclick="sort('price')" />
+        </p>
+        <p>
+            <input type="button" value="Sort by change 1h%" onclick="sort('change1h')" />
+        </p>
+        <p>
+            <input type="button" value="Sort by change 24h%" onclick="sort('change24h')" />
+        </p>
+        <p>
+            <input type="button" value="Sort by market cap" onclick="sort('mcap')" />
+        </p>
+    </div>
+    <table class="iksweb">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>1h %</th>
+                <th>24h %</th>
+                <th>Market Cap</th>
+                <th>Last update time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var currency in Model.CryptoCurrencies)
+            {
+                <tr>
+                    <td>
+                        <div class="bigName">
+                            <img class="coin-logo" src=@currency.logo>
+                            <p>@currency.name</p>
+                            <p>@currency.symbol</p>
+                        </div>
+                    </td>
+                    <td>@currency.priceUSD</td>
+                    <td>@currency.priceChange1h</td>
+                    <td>@currency.priceChange24h</td>
+                    <td>@currency.marketCup</td>
+                    <td>@Model.LastUpdate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <script>
+            function nextPage(next) {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const sort = urlParams.get('sort');
+                let page = parseInt(urlParams.get('page'), 10) + next;
+
+                if (isNaN(page)) {
+                    page = 2;
+                }
+
+                let url = window.location.origin + "?page=" + page;
+                if (sort !== null) {
+                    url += "&sort=" + sort;
+                }
+                window.location.href = url
+            }
+        </script>
+        <p>
+            <input type="button" value="Previous page" onclick="nextPage(-1)" />
+        </p>
+        <p>
+            <input type="button" value="Next page" onclick="nextPage(1)" />
+        </p>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Log in to get table</p>
+    </div>
+}
