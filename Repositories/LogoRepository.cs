@@ -29,7 +29,7 @@ namespace test_fuse.Repositories
 
         public void Save(Logo logo)
         {
-            if (_context.Logos.Find(logo.Id) != null)
+            if (_context.Logos.Where(t => t.CurrencyId == logo.CurrencyId).Count()>1)
             {
                 _context.Logos.Update(logo);
             }

@@ -1,0 +1,8 @@
+﻿version: '3.4'
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: 3223544qQ!
+      ACCEPT_EULA: "Y"
