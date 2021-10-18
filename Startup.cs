@@ -36,7 +36,7 @@ namespace test_fuse
 
             services.AddTransient<IEmailSender, EmailService>();
             services.AddTransient<ILogoRepository, LogoRepository>();
-            services.AddTransient<IDataUpdateService, MockDataUpdateService>();
+            services.AddTransient<IDataUpdateService, DataUpdateService>();
             services.AddTransient<ILogoService, LogoService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddSingleton<IDataUpdaterSingletonTimer, DataUpdaterSingletonTimer>();
@@ -86,6 +86,12 @@ namespace test_fuse
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
         }
     }
 }
