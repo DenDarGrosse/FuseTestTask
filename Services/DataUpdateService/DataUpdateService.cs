@@ -59,7 +59,6 @@ namespace test_fuse.Services.DataUpdateService
             return count;
         }
 
-        //TODO make async
         public void UpdateData()
         {
             cryptoCurrencies.Clear();
