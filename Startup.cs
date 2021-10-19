@@ -36,7 +36,7 @@ namespace test_fuse
 
             services.AddTransient<IEmailSender, EmailService>();
             services.AddTransient<ILogoRepository, LogoRepository>();
-            services.AddTransient<IDataUpdateService, MockDataUpdateService>();
+            services.AddTransient<IDataUpdateService, DataUpdateService>();
             services.AddTransient<ILogoService, LogoService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddSingleton<IDataUpdaterSingletonTimer, DataUpdaterSingletonTimer>();

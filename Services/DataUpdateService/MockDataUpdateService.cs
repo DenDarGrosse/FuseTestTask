@@ -84,6 +84,7 @@ namespace test_fuse.Services.DataUpdateService
 
         public void UpdateData()
         {
+            cryptoCurrencies.Clear();
             _logger.LogDebug("Mock UpdateData");
             string data = System.IO.File.ReadAllText(_configuration["Mock:Data"]);
             DeserializeData(data);

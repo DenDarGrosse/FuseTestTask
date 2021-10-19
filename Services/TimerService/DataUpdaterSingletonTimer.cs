@@ -52,10 +52,10 @@ namespace test_fuse.Services.TimerService
                     if (DateTime.Now >= nextTime)
                     {
                         LastUpdate = DateTime.Now;
-                        IDataUpdateService dataUpdateService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IDataUpdateService>();
-                        dataUpdateService.UpdateData();
                         nextUpdateMinute = (int)(24.0f / _httpRequestService.FreeCoins * averageCoinsCount * 60);
                         nextTime = DateTime.Now.AddMinutes(nextUpdateMinute);
+                        IDataUpdateService dataUpdateService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IDataUpdateService>();
+                        dataUpdateService.UpdateData();
                         _logger.LogInformation($"Successfull update. The next one will be at {nextTime}");
                     }
                 }

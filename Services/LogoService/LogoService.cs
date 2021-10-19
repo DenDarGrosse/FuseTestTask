@@ -33,7 +33,7 @@ namespace test_fuse.Services.LogoService
                 .Where(t => t.logo == null)
                 .Select(t => t.id)
                 .ToList();
-
+            
             if (idsToFetch.Count == 0)
             {
                 return;
@@ -41,7 +41,7 @@ namespace test_fuse.Services.LogoService
 
             for (int i = 0; i < idsToFetch.Count; i += 1000)
             {
-                var idsToSend = idsToFetch.GetRange(i, (idsToFetch.Count > 1000) ? 1000 : idsToFetch.Count);
+                var idsToSend = idsToFetch.GetRange(i, (idsToFetch.Count - i*1000 > 1000) ? 1000 : idsToFetch.Count - i*1000);
 
                 var parameters = new Dictionary<string, string>
                 {
