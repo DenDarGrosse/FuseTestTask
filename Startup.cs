@@ -35,11 +35,35 @@ namespace test_fuse
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IEmailSender, EmailService>();
-            services.AddTransient<ILogoRepository, LogoRepository>();
-            services.AddTransient<IDataUpdateService, DataUpdateService>();
-            services.AddTransient<ILogoService, LogoService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddSingleton<IDataUpdaterSingletonTimer, DataUpdaterSingletonTimer>();
+
+            if (Configuration["Mock:LogoRepository"] == "true")
+            {
+                services.AddTransient<ILogoRepository, MockLogoRepository>();
+            }
+            else
+            {
+                services.AddTransient<ILogoRepository, LogoRepository>();
+            }
+
+            if (Configuration["Mock:DataUpdateService"] == "true")
+            {
+                services.AddTransient<IDataUpdateService, MockDataUpdateService>();
+            }
+            else
+            {
+                services.AddTransient<IDataUpdateService, DataUpdateService>();
+            }
+
+            if (Configuration["Mock:DataUpdateService"] == "true")
+            {
+                services.AddTransient<ILogoService, MockLogoService>();
+            }
+            else
+            {
+                services.AddTransient<ILogoService, LogoService>();
+            }
             
             services.AddControllersWithViews();
             services.AddRazorPages();

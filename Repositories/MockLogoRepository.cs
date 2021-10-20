@@ -20,7 +20,7 @@ namespace test_fuse.Repositories
         public string GetLogoURLByCurrencyId(int logoId)
         {
             _logger.LogDebug($"Mock GetLogoURLByCurrencyId({logoId})");
-            return _configuration["Mock:Logo"];
+            return _configuration["MockData:Logo"];
         }
 
         public void Save(Logo logo)

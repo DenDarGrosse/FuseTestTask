@@ -26,7 +26,7 @@ namespace test_fuse.Services.LogoService
             {
                 if (currency.logo == null)
                 {
-                    currency.logo = _configuration["Mock:Logo"];
+                    currency.logo = _configuration["MockData:Logo"];
                 }
             }
         }
